@@ -40,7 +40,7 @@ exports.handler = async (event) => {
       statusCode: 200,
       ok: true,
       headers,
-      body: JSON.stringify(path, url, parameters),
+      body: JSON.stringify(body),
     };
   } catch (error) {
     return {
