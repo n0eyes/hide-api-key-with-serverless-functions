@@ -2,7 +2,7 @@
 functions = "./functions"
 
 [[redirects]]
-from = "dummy/tmbd/*"
+from = "/dummy/tmbd/*"
 to = "/.netlify/functions/dummy/:splat"
 status = 200
 force = true
