@@ -9,7 +9,7 @@ exports.handler = async (event) => {
     const parameters = Object.entries(queryStringParameters)
       .map(([key, value]) => `${key}=${urlencode.encode(value)}`)
       .join('&')
-      .concat(`&key=${process.env.API_KEY}`);
+      .concat(`&api_key=${process.env.API_KEY}`);
     const URI = `${TMDB_ORIGIN}?${parameters}`;
     const response = await fetch(URI);
     const { statusCode, statusText, ok, headers } = response;
