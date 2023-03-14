@@ -1,5 +1,5 @@
 const data = require('./data.js');
 
 module.exports = () => {
-  return Promise.resolve(data[0]);
+  return Promise.resolve(data.results[0]);
 };
