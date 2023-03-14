@@ -2,13 +2,13 @@
 functions = "./functions"
 
 [[redirects]]
-from = "dummy/youtube/v3/*"
+from = "dummy/tmbd/*"
 to = "/.netlify/functions/dummy/:splat"
 status = 200
 force = true
 
 [[redirects]]
-from = "/youtube/v3/*"
-to = "/.netlify/functions/youtube/:splat"
+from = "/tmdb/*"
+to = "/.netlify/functions/tmdb/:splat"
 status = 200
 force = true

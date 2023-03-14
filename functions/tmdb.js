@@ -1,11 +1,11 @@
-const fetch = require("node-fetch");
-const querystring = require("querystring");
-const stringify = require("../utils/stringify.js");
+const fetch = require('node-fetch');
+const querystring = require('querystring');
+const stringify = require('../utils/stringify.js');
 
-const GOOGLEAPIS_ORIGIN = "https://www.googleapis.com";
+const TMDB_ORIGIN = 'https://api.themoviedb.org/3';
 const headers = {
-  "Access-Control-Allow-Origin": process.env.HOST,
-  "Content-Type": "application/json; charset=utf-8",
+  'Access-Control-Allow-Origin': process.env.HOST,
+  'Content-Type': 'application/json; charset=utf-8',
 };
 
 exports.handler = async (event) => {
@@ -15,10 +15,10 @@ exports.handler = async (event) => {
     headers: { referer },
   } = event;
 
-  const url = new URL(path, GOOGLEAPIS_ORIGIN);
+  const url = new URL(path, TMDB_ORIGIN);
   const parameters = querystring.stringify({
     ...queryStringParameters,
-    key: process.env.API_KEY,
+    api_key: process.env.TMDB_API_KEY,
   });
 
   url.search = parameters;
