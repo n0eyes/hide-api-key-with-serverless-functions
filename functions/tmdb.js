@@ -1,54 +1,36 @@
 const fetch = require('node-fetch');
-const querystring = require('querystring');
-const stringify = require('../utils/stringify.js');
+const urlencode = require('urlencode');
 
 const TMDB_ORIGIN = 'https://api.themoviedb.org/3';
-const headers = {
-  'Access-Control-Allow-Origin': process.env.HOST,
-  'Content-Type': 'application/json; charset=utf-8',
-  Accept: 'application/json',
-};
 
 exports.handler = async (event) => {
-  const {
-    path,
-    queryStringParameters,
-    headers: { referer },
-  } = event;
-
-  const url = new URL(path, TMDB_ORIGIN);
-  const parameters = querystring.stringify({
-    ...queryStringParameters,
-    api_key: process.env.TMDB_API_KEY,
-  });
-
-  url.search = parameters;
-
   try {
-    const response = await fetch(url, { headers: { referer } });
-    const body = await response.json();
+    const { queryStringParameters } = event;
+    const parameters = Object.entries(queryStringParameters)
+      .map(([key, value]) => `${key}=${urlencode.encode(value)}`)
+      .join('&')
+      .concat(`&key=${process.env.API_KEY}`);
+    const URI = `${TMDB_ORIGIN}?${parameters}`;
+    const response = await fetch(URI);
+    const { statusCode, statusText, ok, headers } = response;
+    const body = JSON.stringify(await response.json());
 
-    if (body.error) {
-      return {
-        statusCode: body.error.code,
-        ok: false,
-        headers,
-        body: stringify(body),
-      };
-    }
-
+    headers['Access-Control-Allow-Origin'] = process.env.HOST;
     return {
-      statusCode: 200,
-      ok: true,
+      statusCode,
+      statusText,
+      ok,
       headers,
-      body: stringify(body),
+      body,
     };
   } catch (error) {
     return {
-      statusCode: 400,
+      statusCode: 404,
+      statusText: error.message,
       ok: false,
-      headers,
-      body: stringify(error),
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
     };
   }
 };
