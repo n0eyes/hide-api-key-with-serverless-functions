@@ -15,7 +15,7 @@ exports.handler = async (event) => {
     headers: { referer },
   } = event;
 
-  const url = new URL(path, TMDB_ORIGIN);
+  const url = new URL(TMDB_ORIGIN + path);
   const parameters = querystring.stringify({
     ...queryStringParameters,
     api_key: process.env.TMDB_API_KEY,
