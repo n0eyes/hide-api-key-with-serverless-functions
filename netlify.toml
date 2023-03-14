@@ -9,6 +9,6 @@ force = true
 
 [[redirects]]
 from = "/tmdb/*"
-to = "/.netlify/functions/tmdb"
+to = "/.netlify/functions/tmdb/:splat"
 status = 200
 force = true
