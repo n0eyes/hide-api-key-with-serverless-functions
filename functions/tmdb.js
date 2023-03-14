@@ -15,7 +15,7 @@ exports.handler = async (event) => {
     headers: { referer },
   } = event;
 
-  const url = new URL(TMDB_ORIGIN + path);
+  const url = new URL(TMDB_ORIGIN + path.replace('tmdb', ''));
   const parameters = querystring.stringify({
     ...queryStringParameters,
     api_key: process.env.TMDB_API_KEY,
@@ -40,7 +40,7 @@ exports.handler = async (event) => {
       statusCode: 200,
       ok: true,
       headers,
-      body: JSON.stringify(url, parameters),
+      body: JSON.stringify(path, url, parameters),
     };
   } catch (error) {
     return {
