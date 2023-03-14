@@ -32,7 +32,7 @@ exports.handler = async (event) => {
         statusCode: body.error.code,
         ok: false,
         headers,
-        body: stringify(body),
+        body: JSON.stringify(body),
       };
     }
 
@@ -40,14 +40,14 @@ exports.handler = async (event) => {
       statusCode: 200,
       ok: true,
       headers,
-      body: stringify(body),
+      body: JSON.stringify(body),
     };
   } catch (error) {
     return {
       statusCode: 400,
       ok: false,
       headers,
-      body: stringify(error),
+      body: JSON.stringify({ error: { message: error.message } }),
     };
   }
 };
